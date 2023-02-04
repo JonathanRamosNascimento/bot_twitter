@@ -1,3 +1,3 @@
-# Dólar preço
+# Dollar and Bitcoin value on twitter
 
-BOT para publicar valor do dólar e Bitcoin no Twitter
+Bot created to post the dollar and bitcoin value on twitter with an image and the value printed on that image 
