@@ -25,7 +25,9 @@ export class TwitterService {
     const imageEdit = await Jimp.read(pathImage);
 
     // Font
-    const font = await Jimp.loadFont(Jimp.FONT_SANS_64_WHITE);
+    const font = await Jimp.loadFont(
+      type === 'bitcoin' ? Jimp.FONT_SANS_64_WHITE : Jimp.FONT_SANS_64_BLACK
+    );
 
     // edit image
     imageEdit
