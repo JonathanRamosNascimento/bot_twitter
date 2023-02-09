@@ -16,7 +16,7 @@ const tw = new TwitterService();
 const urlApi = 'https://blockchain.info/ticker';
 
 const job = new CronJob(
-  '0 */5 * * * *',
+  '0 */30 * * * *',
   async () => {
     axios.get(urlApi).then(res => {
       const dados: ResponseBitcoin = res.data;

@@ -16,7 +16,7 @@ const accessToken = process.env.ACESS_TOKEN;
 const accessSecret = process.env.ACESS_TOKEN_SECRET;
 
 const job = new CronJob(
-  '0 */10 9-17 * * 1-5',
+  '0 */15 9-17 * * 1-5',
   async () => {
     axios.get(urlApi).then(res => {
       const dados: ResponseReq = res.data;
