@@ -16,18 +16,23 @@ const accessToken = process.env.ACESS_TOKEN;
 const accessSecret = process.env.ACESS_TOKEN_SECRET;
 
 const job = new CronJob(
-  '0 */15 9-17 * * 1-5',
+  '0 */60 9-17 * * 1-5',
   async () => {
     axios.get(urlApi).then(res => {
       const dados: ResponseReq = res.data;
+
+      const message = `O valor do Dólar agora é de ${formatCurrency(
+        Number(dados.USDBRL.bid)
+      )}, a moeda ${Math.sign(Number(dados.USDBRL.pctChange)) >= 0 ? 'subiu' : 'caiu'} ${
+        dados.USDBRL.pctChange
+      }% desde o início do dia! (${formatDate(
+        new Date(),
+        'DD/MM/YYYY HH:mm'
+      )}) #dolar #precodolar #valordolar #real #dolarhoje #dollar #usd #brl`;
+
       if (process.env.NODE_ENV === 'prod') {
         tw.sendTweet(
-          `O valor do Dólar agora é de ${formatCurrency(Number(dados.USDBRL.bid))}, a moeda ${
-            Math.sign(Number(dados.USDBRL.pctChange)) >= 0 ? 'subiu' : 'caiu'
-          } ${dados.USDBRL.pctChange}% desde o início do dia! (${formatDate(
-            new Date(),
-            'DD/MM/YYYY HH:mm'
-          )}) #dolar #precodolar #valordolar #real #dolarhoje #dollar #usd #brl`,
+          message,
           appKey,
           appSecret,
           accessToken,
@@ -36,14 +41,7 @@ const job = new CronJob(
           `${formatCurrency(Number(dados.USDBRL.bid))}`
         );
       } else {
-        console.log(
-          `O valor do Dólar agora é de ${formatCurrency(Number(dados.USDBRL.bid))}, a moeda ${
-            Math.sign(Number(dados.USDBRL.pctChange)) >= 0 ? 'subiu' : 'caiu'
-          } ${dados.USDBRL.pctChange}% desde o início do dia! (${formatDate(
-            new Date(),
-            'DD/MM/YYYY HH:mm'
-          )}) #dolar #precodolar #valordolar #real #dolarhoje #dollar #usd #brl`
-        );
+        console.log(message);
       }
     });
   },
